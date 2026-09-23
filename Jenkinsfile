@@ -64,5 +64,14 @@ stage('Debug Podman') {
         '''
     }
 }
+
+        stage('Test Spring Boot API') {
+    steps {
+        bat '''
+            timeout /t 10 /nobreak >NUL
+            curl.exe -f http://localhost:8080/getString
+        '''
+    }
+}
     }
 }
