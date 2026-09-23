@@ -8,6 +8,25 @@ pipeline {
                 checkout scm
             }
         }
+stage('Debug Podman') {
+    steps {
+        bat '''
+            echo ===== USER =====
+            whoami
+            echo ===== PROFILE =====
+            echo %USERPROFILE%
+            echo ===== PODMAN VERSION =====
+            podman version
+            echo ===== CONNECTIONS =====
+            podman system connection list
+            echo ===== MACHINE =====
+            podman machine list
+            echo ===== PODMAN INFO =====
+            podman info
+        '''
+    }
+}
+        
 
         stage('Build & Test') {
             steps {
