@@ -64,13 +64,7 @@ stage('Debug Podman') {
         '''
     }
 }
-
-        stage('Wait for Application') {
-    steps {
-        powershell 'Start-Sleep -Seconds 10'
-        bat 'podman logs order-service'
-    }
-}
+   
 
         stage('Test Spring Boot API') {
     steps {
