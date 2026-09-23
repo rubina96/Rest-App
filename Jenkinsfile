@@ -9,21 +9,33 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Build Image') {
             steps {
-                bat 'mvn test'
+                bat 'podman build -t order-service:latest .'
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy Redis') {
             steps {
-                bat 'podman_compose up -d --build'
+                bat '''
+                    podman rm -f redis 2>NUL || exit /b 0
+                    podman run -d --name redis -p 6379:6379 redis:latest
+                '''
+            }
+        }
+
+        stage('Deploy Order Service') {
+            steps {
+                bat '''
+                    podman rm -f order-service 2>NUL || exit /b 0
+                    podman run -d --name order-service -p 8080:8080 order-service:latest
+                '''
             }
         }
     }
