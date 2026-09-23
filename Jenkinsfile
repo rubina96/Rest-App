@@ -66,10 +66,10 @@ stage('Debug Podman') {
 }
    
 
-        stage('Test Spring Boot API') {
+       stage('Test Spring Boot API') {
     steps {
         bat '''
-            timeout /t 10 /nobreak >NUL
+            powershell -NoProfile -Command "Start-Sleep -Seconds 10"
             curl.exe -f http://localhost:8080/getString
         '''
     }
