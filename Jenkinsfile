@@ -23,7 +23,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat 'python -m podman_compose up -d --build'
+                bat 'podman_compose up -d --build'
             }
         }
     }
