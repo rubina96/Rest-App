@@ -68,7 +68,7 @@ stage('Debug Podman') {
         stage('Wait for Application') {
     steps {
         powershell 'Start-Sleep -Seconds 10'
-        bat 'podman logs email-service-test'
+        bat 'podman logs order-service'
     }
 }
 
